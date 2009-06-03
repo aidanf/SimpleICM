@@ -1,7 +1,7 @@
 import unittest
 from tests.testcase import TestCase
 
-from icm import ICM
+from model import ICM
 
 class ICMTest(TestCase):
 	

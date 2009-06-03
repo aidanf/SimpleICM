@@ -53,4 +53,4 @@ class ICM:
 
 
 
-if __name__ == "__main__": print "ICM library"
+if __name__ == "__main__": print "ICM class"
