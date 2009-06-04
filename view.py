@@ -30,6 +30,8 @@ class SimpleICMForm(System.Windows.Forms.Form):
         for payout in self.payouts:
             payout.GotFocus += self.controller.cache_value
             payout.LostFocus += self.controller.validate_number
+        self._WebBrowser1.Navigating += self.controller.handle_navigate
+        
     @accepts(Self(), bool)
     @returns(None)
     def Dispose(self, disposing):
@@ -60,7 +62,7 @@ class SimpleICMForm(System.Windows.Forms.Form):
         self._label_eq_header = System.Windows.Forms.Label()
         self._label_player_header = System.Windows.Forms.Label()
         self._label_stack_header = System.Windows.Forms.Label()
-        self._richTextBox1 = System.Windows.Forms.RichTextBox()
+        self._WebBrowser1 = System.Windows.Forms.WebBrowser()
 
         self._payout_labels = []
         self.payouts = []
@@ -122,7 +124,7 @@ class SimpleICMForm(System.Windows.Forms.Form):
         # 
         # tabPage3
         # 
-        self._tabs[2].Controls.Add(self._richTextBox1)
+        self._tabs[2].Controls.Add(self._WebBrowser1)
         self._tabs[2].Location = System.Drawing.Point(4, 27)
         self._tabs[2].Name = 'tabPage3'
         self._tabs[2].Padding = System.Windows.Forms.Padding(3)
@@ -270,16 +272,18 @@ class SimpleICMForm(System.Windows.Forms.Form):
         initialize_equity(8, System.Drawing.Point(210, 312), 
                         System.Drawing.Size(38, 18), 68)
         # 
-        # richTextBox1
+        # WebBrowser1
         # 
-        self._richTextBox1.Location = System.Drawing.Point(7, 7)
-        self._richTextBox1.Name = 'richTextBox1'
-        self._richTextBox1.ReadOnly = True
-        self._richTextBox1.Size = System.Drawing.Size(266, 403)
-        self._richTextBox1.TabIndex = 0
-        self._richTextBox1.DetectUrls = True
-        self._richTextBox1.BackColor = Color.White
-        self._richTextBox1.LoadFile(Path.Combine(self.executableDirectory, 'about.rtf'))
+        self._WebBrowser1.Location = System.Drawing.Point(7, 7)
+        self._WebBrowser1.Name = 'WebBrowser1'
+        self._WebBrowser1.Size = System.Drawing.Size(266, 403)
+        self._WebBrowser1.TabIndex = 0
+        self._WebBrowser1.BackColor = Color.White
+        #self._WebBrowser1.AllowNavigation = False
+        self._WebBrowser1.AllowWebBrowserDrop = False
+        self._WebBrowser1.IsWebBrowserContextMenuEnabled = False
+        self._WebBrowser1.ScrollBarsEnabled = False
+        self._WebBrowser1.DocumentText = open(Path.Combine(self.executableDirectory, 'about.html')).read()
         # 
         # labelpayouts[0]
         # 

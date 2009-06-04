@@ -3,6 +3,7 @@ clr.AddReference('System.Windows.Forms')
 clr.AddReference('System.Drawing')
 #clr.AddReference('System.ComponentModel')
 
+from utils import launch_default_browser
 
 import System
 from System.Windows.Forms import *
@@ -44,7 +45,13 @@ class SimpleICMController:
             MessageBox.Show("Please enter a number!", "Input validation error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             sender.Text = self._cachedText[sender.Name]
             sender.Focus()
-           
-
+            
+    def handle_navigate(self, sender, event):
+        event.Cancel = True
+        print "Navigating %s %s %s" % (event.Url, sender, event)
+        launch_default_browser(event.Url)
+        #System.Diagnostics.Process.Start(event.Url)
+        
+        
 if __name__=='__main__':
     print "Controller"
