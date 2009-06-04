@@ -9,13 +9,13 @@ from System.Windows.Forms import *
 from System.IO import File, Path
 from model import ICM
 
-from decimal import *
-D = Decimal
+from decimal import Decimal as D
 
 class SimpleICMController:
     def __init__(self, view):
         self.view = view
         self._model = None
+        self._cachedText = {}
         
     def handle_go(self, sender, event):
         self.view.statusLabel.Text = "Status: Calculating"
@@ -32,6 +32,19 @@ class SimpleICMController:
             self.view.equities[i].Text = str(equities[i])
         self.view.statusLabel.Text = "Status: Ready"
         self.view.Refresh()
+    
+    def cache_value(self, sender, event):
+        print "Caching %s" % sender.Text
+        self._cachedText[sender.Name] = sender.Text   
+    def validate_number(self, sender, event):
+        print "LostFocus %s %s" % (sender, event)
+        try:
+            D(sender.Text)
+        except:
+            MessageBox.Show("Please enter a number!", "Input validation error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            sender.Text = self._cachedText[sender.Name]
+            sender.Focus()
+           
 
 if __name__=='__main__':
     print "Controller"

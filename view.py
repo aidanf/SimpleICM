@@ -24,7 +24,12 @@ class SimpleICMForm(System.Windows.Forms.Form):
         self.InitializeComponent()
         self.controller = SimpleICMController(self)
         self.go_button.Click += self.controller.handle_go
-        
+        for stack in self.stacks:
+            stack.GotFocus += self.controller.cache_value
+            stack.LostFocus += self.controller.validate_number
+        for payout in self.payouts:
+            payout.GotFocus += self.controller.cache_value
+            payout.LostFocus += self.controller.validate_number
     @accepts(Self(), bool)
     @returns(None)
     def Dispose(self, disposing):
@@ -244,7 +249,7 @@ class SimpleICMForm(System.Windows.Forms.Form):
             self.equities[i].Name = "eq%i" % (i+1)
             self.equities[i].Size = size
             self.equities[i].TabIndex = tabindex
-            self.equities[i].Text = "eq%i" % (i+1)
+            self.equities[i].Text = ''
             
         initialize_equity(0, System.Drawing.Point(210, 48),
                         System.Drawing.Size(38, 18), 56)
@@ -272,7 +277,9 @@ class SimpleICMForm(System.Windows.Forms.Form):
         self._richTextBox1.ReadOnly = True
         self._richTextBox1.Size = System.Drawing.Size(266, 403)
         self._richTextBox1.TabIndex = 0
-        self._richTextBox1.Text = ''
+        self._richTextBox1.DetectUrls = True
+        self._richTextBox1.BackColor = Color.White
+        self._richTextBox1.LoadFile(Path.Combine(self.executableDirectory, 'about.rtf'))
         # 
         # labelpayouts[0]
         # 
