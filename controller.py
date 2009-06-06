@@ -23,11 +23,8 @@ class SimpleICMController:
         self.view.Refresh()
         stacks = [D(stack.Text) for stack in self.view.stacks]
         payouts = [D(payout.Text) for payout in self.view.payouts if D(payout.Text) > D(0)]
-        print stacks
-        print payouts
         self._model = ICM(stacks, payouts)
         equities = self._model.equities
-        print equities
         
         for i in range(len(equities)):
             self.view.equities[i].Text = str(equities[i])
@@ -35,10 +32,8 @@ class SimpleICMController:
         self.view.Refresh()
     
     def cache_value(self, sender, event):
-        print "Caching %s" % sender.Text
         self._cachedText[sender.Name] = sender.Text   
     def validate_number(self, sender, event):
-        print "LostFocus %s %s" % (sender, event)
         try:
             D(sender.Text)
         except:
@@ -48,7 +43,6 @@ class SimpleICMController:
             
     def handle_navigate(self, sender, event):
         event.Cancel = True
-        print "Navigating %s %s %s" % (event.Url, sender, event)
         launch_default_browser(event.Url)
         #System.Diagnostics.Process.Start(event.Url)
         

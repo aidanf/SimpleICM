@@ -335,10 +335,4 @@ class SimpleICMForm(System.Windows.Forms.Form):
 
 
 if __name__ == '__main__':
-
-    
-    form = SimpleICMForm()
-    print "XXX "+form.executableDirectory
-    Application.EnableVisualStyles()
-    Application.Run(form)
-
+    print "View"

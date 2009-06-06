@@ -1,4 +1,5 @@
 import clr
+import System
 clr.AddReference('System.Drawing')
 clr.AddReference('System.Windows.Forms')
 
@@ -14,24 +15,15 @@ from System.Windows.Forms import (
     ToolStripButton, ToolStripGripStyle,
     ToolStripMenuItem
 )
+#
 
+from controller import SimpleICMController
+from view import SimpleICMForm
 
 
 import sys
 from System.IO import Directory, Path
 
-if __name__ == '__main__':
-    executablePath = __file__
-    if executablePath is None:
-        executablePath = Application.ExecutablePath
-    executableDirectory = Path.GetDirectoryName(executablePath)
-
-    import clr
-    sys.path.append(Path.Combine(executableDirectory, "lib"))
-    print "XXX "+executablePath
-    print executableDirectory
-    print sys.path
-    clr.AddReference('SimpleICMInterface')
-    
-from SimpleICMInterface import SimpleICMInterface
-
+form = SimpleICMForm()
+Application.EnableVisualStyles()
+Application.Run(form)

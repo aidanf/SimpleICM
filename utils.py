@@ -15,12 +15,8 @@ def get_default_browser():
             key.Close()
     
 def launch_default_browser(destination):
-    print "launching default browser"
-    print destination
     p = System.Diagnostics.Process()
     p.StartInfo.FileName = get_default_browser()
-    print "Filename: %s" % p.StartInfo.FileName
-    print "http://pokerkernel.com"
     #print "%s %s" % (get_default_browser(), url)
     p.StartInfo.Arguments = "%s" % destination
     p.Start()
